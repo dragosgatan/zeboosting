@@ -2,14 +2,11 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
-from sklearn.preprocessing import LabelEncoder
-
 def preprocess_data(df, target_col, categorised, test_df=None):
     y_train = df[target_col]
     y_train_encoded = y_train
     if categorised.get('target_categorical'):
-        le = LabelEncoder()
-        y_train_encoded = pd.Series(le.fit_transform(y_train), index=y_train.index)
+        y_train_encoded = pd.Series(pd.factorize(y_train)[0], index=y_train.index)
 
     drop_cols = categorised['drop']
     x_cols = [col for col in df.columns if col not in drop_cols and col != target_col]
