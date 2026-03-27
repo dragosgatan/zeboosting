@@ -1,8 +1,10 @@
 import pandas as pd 
 import numpy as np 
 
-def categorise_features(df, ohe_limit = 5, word_threshold = 5):
+def categorise_features(df, target_col, ohe_limit = 5, word_threshold = 5):
     categorised = {
+        'task': 'regression',
+        'target_categorical': False,
         'drop': [],
         'numerical': [],
         'ohe': [],
@@ -12,9 +14,18 @@ def categorise_features(df, ohe_limit = 5, word_threshold = 5):
     rows = len(df)
     object_cols = df.select_dtypes(include=['object', 'string']).columns.tolist()
     
+    #handling target 
+    if target_col in object_cols:
+        categorised['task'] = 'classification'
+        categorised['target_categorical'] = True
+    elif not np.issubdtype(df[target_col].dtype, np.floating):
+        if df[target_col].nunique() / len(df) < 0.30: #ik 30% is a lot but im thinking about really small datasets
+            categorised['task'] = 'classification'
     for col in df.columns:
+        if col == target_col:
+            continue
+
         nunique = df[col].nunique()
-        
         if nunique == rows:
             if col in object_cols:
                 word_counts = df[col].astype(str).str.split().str.len()

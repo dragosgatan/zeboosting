@@ -2,9 +2,15 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
+from sklearn.preprocessing import LabelEncoder
 
 def preprocess_data(df, target_col, categorised, test_df=None):
     y_train = df[target_col]
+    y_train_encoded = y_train
+    if categorised.get('target_categorical'):
+        le = LabelEncoder()
+        y_train_encoded = pd.Series(le.fit_transform(y_train), index=y_train.index)
+
     drop_cols = categorised['drop']
     x_cols = [col for col in df.columns if col not in drop_cols and col != target_col]
     x_train = df[x_cols].copy()
@@ -25,16 +31,16 @@ def preprocess_data(df, target_col, categorised, test_df=None):
                 if x_test is not None:
                     x_test[col] = x_test[col].fillna('missing_value')
 
-    target_mean = y_train.mean()
+    target_mean = y_train_encoded.mean()
     for col in categorised['target_encode']:
         if col in x_train.columns:
             if x_test is not None:
-                stats = y_train.groupby(x_train[col]).agg(['sum', 'count'])
+                stats = y_train_encoded.groupby(x_train[col]).agg(['sum', 'count'])
                 lookup = (stats['sum'] + target_mean) / (stats['count'] + 1)
                 x_test[col] = x_test[col].map(lookup).fillna(target_mean)
             
-            group_y = y_train.groupby(x_train[col])
-            x_train[col] = (group_y.cumsum() - y_train + target_mean) / (group_y.cumcount() + 1)
+            group_y = y_train_encoded.groupby(x_train[col])
+            x_train[col] = (group_y.cumsum() - y_train_encoded + target_mean) / (group_y.cumcount() + 1)
     
     for col in categorised['ohe']:
         if col in x_train.columns:
