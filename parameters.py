@@ -10,8 +10,8 @@ def get_params(df):
     else:
         lr = 0.01
     params = {
-        'learning_rate' = lr
-        'max_iter' = 1000,
+        'learning_rate': lr,
+        'max_iter': 1000,
         'early_stopping': True,
         'n_iter_no_change': 30,
         'random_state': 42

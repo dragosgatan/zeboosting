@@ -19,7 +19,7 @@ def categorise_features(df, target_col, ohe_limit = 5, word_threshold = 5):
         categorised['task'] = 'classification'
         categorised['target_categorical'] = True
     elif not np.issubdtype(df[target_col].dtype, np.floating):
-        if df[target_col].nunique() / len(df) < 0.30: #ik 30% is a lot but im thinking about really small datasets
+        if df[target_col].nunique() / len(df) < 0.10 and df[target_col].nunique() <= 10: #ik 10% is kind of a lot 
             categorised['task'] = 'classification'
     for col in df.columns:
         if col == target_col:
