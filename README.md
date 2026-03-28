@@ -9,6 +9,7 @@
 - scikit-learn
 - pandas
 - numpy
+- catboost
 ```bash
 pip install -r requirements.txt
 ```
@@ -18,7 +19,11 @@ pip install -r requirements.txt
 from zeboosting import ZeBoosting
 predictions = ZeBoosting(df_train, 'target', df_test)
 ```
-
+### CatBoost version (more accurate)
+```python
+from zeboosting import ZeCatBoosting
+predictions = ZeCatBoosting(df_train, 'target', df_test)
+```
 ## Installation
 ```bash
 git clone https://github.com/dragosgatan/zeboosting.git

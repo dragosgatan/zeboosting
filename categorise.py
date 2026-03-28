@@ -32,9 +32,12 @@ def categorise_features(df, target_col, ohe_limit = 5, word_threshold = 5):
                 #if more than half the values exceed the word threshold, it's most likely a nlp column
                 if (word_counts > word_threshold).mean() > 0.5: 
                     categorised['text'].append(col)
-                #else, the column is probably an id column or noise
                 else:
                     categorised['drop'].append(col)
+            elif rows >= 4 and np.issubdtype(df[col].dtype, np.number):
+                if (df[col].iloc[2] == df[col].iloc[1] + 1) and (df[col].iloc[3] == df[col].iloc[2] + 1):
+                    categorised['drop'].append(col)
+
         #noise
         elif nunique == 1:
             categorised['drop'].append(col)
