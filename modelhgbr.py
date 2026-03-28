@@ -4,7 +4,7 @@ from .categorise import categorise_features
 from .parameters import get_params
 import pandas as pd
 
-def run_model(df, target_col, test_df, verbose=False):
+def model_hgbr(df, target_col, test_df, verbose=False):
     categorised = categorise_features(df, target_col)
     params = get_params(df)
     params['verbose'] = 1 if verbose else 0

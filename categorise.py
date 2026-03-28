@@ -35,8 +35,6 @@ def categorise_features(df, target_col, ohe_limit = 5, word_threshold = 5):
                 #else, the column is probably an id column or noise
                 else:
                     categorised['drop'].append(col)
-            else:
-                categorised['drop'].append(col)
         #noise
         elif nunique == 1:
             categorised['drop'].append(col)
