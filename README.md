@@ -10,7 +10,7 @@
 - pandas
 - numpy
 - catboost
-Dependencies are installed automatically when you run `pip install .`.
+#### Running 'pip install .' will automatically install all dependencies.
 
 ## Usage
 ```python
@@ -29,7 +29,7 @@ cd zeboosting
 pip install -e .
 ```
 
-If you prefer a non-editable install:
+Or, for a non-editable install:
 ```bash
 pip install .
 ```
