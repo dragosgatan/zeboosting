@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zeboosting"
+version = "0.1.0"
+description = "Zero-effort boosting model with automatic preprocessing"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+	"pandas",
+	"numpy",
+	"scikit-learn",
+	"catboost",
+]
+
+[tool.setuptools]
+packages = ["zeboosting"]
+
+[tool.setuptools.package-dir]
+zeboosting = "."

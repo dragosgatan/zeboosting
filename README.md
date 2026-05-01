@@ -10,9 +10,7 @@
 - pandas
 - numpy
 - catboost
-```bash
-pip install -r requirements.txt
-```
+Dependencies are installed automatically when you run `pip install .`.
 
 ## Usage
 ```python
@@ -28,7 +26,12 @@ predictions = ZeCatBoosting(df_train, 'target', df_test)
 ```bash
 git clone https://github.com/dragosgatan/zeboosting.git
 cd zeboosting
-pip install -r requirements.txt
+pip install -e .
+```
+
+If you prefer a non-editable install:
+```bash
+pip install .
 ```
 
 
